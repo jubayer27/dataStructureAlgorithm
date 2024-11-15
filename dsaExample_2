@@ -1,0 +1,56 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+void swap(int &a, int &b)
+{
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+int partition(vector<int> &arr, int low, int high)
+{
+    int pivot = arr[high];
+    int i = low - 1;
+    for (int j = low; j < high; j++)
+    {
+        if (arr[j] < pivot)
+        {
+            i++;
+            swap(arr[i], arr[j]);
+        }
+    }
+    swap(arr[i + 1], arr[high]);
+    return (i + 1);
+}
+
+void quickShort(vector<int> &arr, int low, int high)
+{
+    if (low < high)
+    {
+        int pi = partition(arr, low, high);
+        quickShort(arr, low, pi - 1);
+        quickShort(arr, pi + 1, high);
+    }
+}
+
+int main()
+{
+    vector<int> arr = {15, 12, 13, 10, 2, 8};
+    int n = arr.size();
+    cout << "Original array: ";
+    for (int valu : arr)
+    {
+        cout << valu << " ";
+    }
+    cout << endl;
+
+    quickShort(arr, 0, n - 1);
+    cout << "Sorted array: ";
+    for (int valu : arr)
+    {
+        cout << valu << " ";
+    }
+    return 0;
+}
